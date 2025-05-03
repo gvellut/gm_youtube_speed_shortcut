@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Easier video speed setting
 // @namespace    https://vellut.com/
-// @version      0.4
+// @version      0.5
 // @description  It's all in the title
 // @author       GV
 // @match        *://www.youtube.com/*
@@ -13,8 +13,8 @@
     const hotkeys = {
         DECREASE: "KeyZ",
         RESET: "KeyX",
-        SPEED: "KeyC",
-        MAX: "KeyV",
+        SPEED: "KeyV", // C conflicts with YT key
+        MAX: "KeyB",
     };
 
 
@@ -91,8 +91,23 @@
         true
     );
 
+    const isComposableElement = (element) => {
+        if (!element) {
+            return false;
+        }
+
+        return (
+            element.contentEditable === 'true' || element.tagName === 'INPUT' || element.tagName === 'TEXTAREA'
+        );
+    };
+
     document.onkeydown = function (e) {
-        if (e.ctrlKey && e.shiftKey && Object.values(hotkeys).includes(e.code)) {
+        // don't process if writing a comment of search
+        if (isComposableElement(e.target)) {
+            return;
+        }
+
+        if (Object.values(hotkeys).includes(e.code)) {
             switch (e.code) {
                 case hotkeys.DECREASE:
                     speed -= 0.25;
