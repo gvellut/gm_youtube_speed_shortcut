@@ -2,7 +2,7 @@
 // @name         Easier video speed setting
 // @namespace    https://vellut.com/
 // @version      0.5
-// @description  It's all in the title
+// @description  Shortcuts for setting Youtube playback speed
 // @author       GV
 // @match        *://www.youtube.com/*
 // @grant        none
